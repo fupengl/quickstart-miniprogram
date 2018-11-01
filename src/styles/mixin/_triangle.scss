@@ -1,0 +1,51 @@
+// size color angle-direction
+@mixin triangle ($size, $color, $direction) {
+	height: 0;
+	width: 0;
+
+	@if ($direction == top) or ($direction == bottom) or ($direction == right) or ($direction == left) {
+		border-color: transparent;
+		border-style: solid;
+		border-width: $size / 2;
+
+		@if $direction == top {
+			border-bottom-color: $color;
+		}
+
+		@else if $direction == right {
+			border-left-color: $color;
+		}
+
+		@else if $direction == bottom {
+			border-top-color: $color;
+		}
+
+		@else if $direction == left {
+			border-right-color: $color;
+		}
+	}
+
+	@else if ($direction == top-right) or ($direction == top-left) {
+		border-top: $size solid $color;
+
+		@if $direction == top-right {
+			border-left: $size solid transparent;
+		}
+
+		@else if $direction == top-left {
+			border-right: $size solid transparent;
+		}
+	}
+
+	@else if ($direction == bottom-right) or ($direction == bottom-left) {
+		border-bottom: $size solid $color;
+
+		@if $direction == bottom-right {
+			border-left: $size solid transparent;
+		}
+
+		@else if $direction == bottom-left {
+			border-right: $size solid transparent;
+		}
+	}
+}

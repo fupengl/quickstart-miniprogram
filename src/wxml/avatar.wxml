@@ -1,0 +1,3 @@
+<template name="avatar">
+    <image src="{{avatar}}" background-size="cover"></image>
+</template>

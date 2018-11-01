@@ -1,14 +1,40 @@
-.content{
-  width: 100%;
-  color: red;
-  text-align: center;
+@import '~style';
+
+.index {
+	font-size: 40rpx;
 }
-.avatar{
-  width: 750rpx;
+
+.commodity_screen {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: #000;
+	opacity: 0.2;
+	overflow: hidden;
+	z-index: 1000;
+	color: #fff;
 }
-.footer{
-  background: url("../../resources/images/footer.jpg") no-repeat;
-  height: 300rpx;
-  width: 100%;
-  background-size: 100%;
+
+.commodity_attr_box {
+	width: 100%;
+	overflow: hidden;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 2000;
+	background: #000;
+	padding-top: 20rpx;
+	transition: transform 200ms linear 0ms;
+	transform: translateY(300rpx);
+	transform-origin: 50% 50% 0;
+}
+
+.show {
+	transform: translateY(0);
+}
+
+.hide {
+	transform: translateY(300rpx);
 }

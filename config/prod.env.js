@@ -1,4 +1,4 @@
 module.exports = {
-    NODE_ENV: '"production"',
-    HOST: "'https://truck.baixing.com/'"
-}
+	ENV: '"production"',
+	BASE_API: "'http://localhost:8081'"
+};

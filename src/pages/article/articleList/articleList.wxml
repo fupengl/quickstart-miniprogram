@@ -1,0 +1,3 @@
+<view class="articleList">articleList</view>
+
+<navigator url="../articleInfo/articleInfo">go to articleInfo</navigator>
