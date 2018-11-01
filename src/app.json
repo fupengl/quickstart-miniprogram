@@ -1,0 +1,29 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/home/index",
+    "pages/shop/index"
+  ],
+  "subpackages":[
+    {
+      "root":"subpackages/product",
+      "pages":[
+        "productList/index",
+        "productDetail/index",
+        "buy/index"
+      ]
+    },
+    {
+      "root":"subpackages/article",
+      "pages":[
+        "articleList/index"
+      ]
+    }
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#37363B",
+    "navigationBarTitleText": "微信小程序",
+    "navigationBarTextStyle": "white"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "name": "wx-webpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --process --config ./build/webpack.pro.js",
+    "build:dev": "webpack --process --model=develop --config ./build/webpack.dev.js",
+    "start": "node ./build/devServer.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/lodash": "^4.14.116",
+    "babel-runtime": "^6.26.0",
+    "bx-wxapp-ts-decorator": "^1.0.3bx",
+    "bx-wxapp-webpack-plugin": "^1.0.5",
+    "lodash": "^4.17.11",
+    "miniprogram-navigation-bar": "0.0.4",
+    "miniprogram-recycle-view": "0.0.6",
+    "miniprogram-slide-view": "0.0.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-lodash": "^3.3.4",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "bx-wxapp-npm-plugin": "^1.0.1",
+    "chalk": "^2.4.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^1.0.0",
+    "file-loader": "^1.1.11",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "less-loader": "^4.1.0",
+    "lodash-webpack-plugin": "^0.11.5",
+    "mini-css-extract-plugin": "^0.4.4",
+    "node-sass": "^4.9.3",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.22.1",
+    "tencent-wx-app": "^1.1.201712221707",
+    "transform-runtime": "0.0.0",
+    "ts-loader": "^4.5.0",
+    "typescript": "^2.7.2",
+    "uglifyjs-webpack-plugin": "^1.3.0",
+    "url-loader": "^1.1.1",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-middleware-hard-disk": "^1.12.1",
+    "webpack-merge": "^4.1.4"
+  },
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0"
+  }
+}

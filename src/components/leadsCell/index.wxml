@@ -1,0 +1,19 @@
+<template name="leadsCell">
+	<view class="leadscell" catchtap='onShowLeadsDetail' data-id="{{id}}">
+		<view class="top-info-view">
+			<view class="items">
+				<block wx:for="{{meta}}" wx:key>
+					<view class="item" wx:if="{{item.value && item.value.length}}">
+						<text class="item-title">{{item.name}}</text>
+						<text class="item-content">{{item.value}}</text>
+					</view>
+				</block>
+			</view>
+		</view>
+		<view class="bottom-info-view">
+			<form bindsubmit="formContact" bindreset="formReset" report-submit="true">
+				<button form-type="submit" class="offer-btn btn" catchtap="onCallContact" data-mobile="{{mobile}}" data-id="{{id}}">联系方式</button>
+			</form>
+		</view>
+	</view>
+</template>
