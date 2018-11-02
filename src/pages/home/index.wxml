@@ -1,5 +1,6 @@
 <view>
     <image src="../../resources/images/avatar.jpeg" class="avatar"></image>
-    <view class="content"> 欢迎来到微信小程序-webpack版</view>
+    <view class="content">首页</view>
+    <view class="content" bind:tap="toSubpackage">subpackage</view>
     <view class="footer"></view>
 </view>

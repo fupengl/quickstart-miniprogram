@@ -1,5 +1,5 @@
 <view>
     <image src="../../resources/images/avatar.jpeg" class="avatar"></image>
-    <view class="content"> 欢迎来到微信小程序-webpack版</view>
+    <view class="content">客户资料</view>    
     <view class="footer"></view>
 </view>
