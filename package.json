@@ -22,6 +22,7 @@
     "miniprogram-slide-view": "0.0.3"
   },
   "devDependencies": {
+    "@types/weixin-app": "^2.2.11",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -39,13 +40,13 @@
     "css-loader": "^1.0.0",
     "file-loader": "^1.1.11",
     "friendly-errors-webpack-plugin": "^1.7.0",
+    "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "lodash-webpack-plugin": "^0.11.5",
     "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.1",
-    "tencent-wx-app": "^1.1.201712221707",
     "transform-runtime": "0.0.0",
     "ts-loader": "^4.5.0",
     "typescript": "^2.7.2",
