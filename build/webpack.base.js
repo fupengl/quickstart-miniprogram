@@ -24,7 +24,9 @@ function getEntry(rootSrc, pattern) {
 }
 
 //应用入口
-const appEntry = {app: './src/app.js'}
+const appEntry = {
+    app: './src/app.js'
+}
 //页面入口
 const pagesEntry = getEntry(resolve('./src'), 'pages/**/index.js')
 //组件入口
@@ -45,37 +47,44 @@ module.exports = {
     optimization: {
         splitChunks: {
             cacheGroups: {
+                default: false,
                 //node_modules
                 vendor: {
                     chunks: "all",
                     test: /[\\/]node_modules[\\/]/,
                     name: 'vendors',
-                    minChunks:2
+                    minChunks: 2
                 },
                 //其他公用代码
                 common: {
                     chunks: 'all',
                     test: /[\\/]src[\\/]/,
                     minChunks: 2,
-                    name:"commons",
-                    minSize:0
+                    name: "commons",
+                    minSize: 0
                 },
+                // product: {
+                //     chunks: 'all',
+                //     test: /[\\/]subpackages[\\/]product[\\/]/,
+                //     minChunks: 2,
+                //     name:"subpackages/product/test",
+                //     minSize:0
+                // }
             }
         },
         runtimeChunk: 'single'
     },
     resolve: {
-        extensions: ['.js', '.json', '.ts',],
+        extensions: ['.js', '.json', '.ts', ],
         alias: {
             '@': resolve('src'),
         },
         symlinks: false
     },
     module: {
-        rules: [
-            {
-                test:/\.js$/,
-                loader:"babel-loader",
+        rules: [{
+                test: /\.js$/,
+                loader: "babel-loader",
                 exclude: /node_modules/,
             },
             {
@@ -100,10 +109,14 @@ module.exports = {
     },
 
     plugins: [
-        new cleanWebpackPlugin([resolve("./dist")], {root: resolve("./")}),
+        new cleanWebpackPlugin([resolve("./dist")], {
+            root: resolve("./")
+        }),
         new CopyWebpackPlugin(
-            [{from: "./", to: "./"}],
-            {
+            [{
+                from: "./",
+                to: "./"
+            }], {
                 ignore: ['*.js', '*.css', '*.ts', '*.scss', "*.less", "*.sass"],
                 context: resolve('src'),
             }
