@@ -10,13 +10,9 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const utils = require('./utils');
 const config = require('../config');
 
-function resolve(dir) {
-	return path.join(__dirname, '../', dir);
-}
-
 function getAppEntry() {
 	const info = path.parse(config.entry);
-	const { pages = [], subpackages = [] } = require(`${resolve(info.dir)}/app.json`);
+	const { pages = [], subpackages = [] } = require(`${utils.resolve(info.dir)}/app.json`);
 	subpackages.forEach(sp => {
 		if (sp.pages.length) {
 			sp.pages.forEach(page => {
@@ -26,27 +22,27 @@ function getAppEntry() {
 	});
 	let files = [];
 	pages.forEach(page => {
-		files.push(path.join(resolve(info.dir), page + '.js'),
-			path.join(resolve(info.dir), page + '.ts'));
+		files.push(path.join(utils.resolve(info.dir), page + '.js'),
+			path.join(utils.resolve(info.dir), page + '.ts'));
 	});
 	return files.filter(file => {
 		if (fs.existsSync(file)) return file;
 	}).reduce((res, file) => {
 		const fileInfo = path.parse(file);
-		const key = '/' + fileInfo.dir.slice(resolve(info.dir).length + 1) + '/' + fileInfo.name;
+		const key = '/' + fileInfo.dir.slice(utils.resolve(info.dir).length + 1) + '/' + fileInfo.name;
 		res[key] = path.resolve(file);
 		return res;
 	}, {});
 }
 
-const appEntry = { app: resolve(config.entry) };
+const appEntry = { app: utils.resolve(config.entry) };
 
 const entry = Object.assign({}, appEntry, getAppEntry());
 module.exports = {
 	entry: entry,
 	output: {
 		filename: '[name].js',
-		path: resolve('dist'),
+		path: utils.resolve('dist'),
 		globalObject: 'global',
 	},
 	//must not be eval
@@ -76,9 +72,9 @@ module.exports = {
 	},
 	resolve: {
 		extensions: ['.js', '.json', '.ts', ],
-		alias: {
-			'@': resolve('src'),
-		},
+		alias: Object.assign({}, config.alias, {
+			'@': utils.resolve('src'),
+		}),
 		symlinks: false
 	},
 	module: {
@@ -133,8 +129,8 @@ module.exports = {
 	},
 
 	plugins: [
-		new CleanWebpackPlugin([resolve('./dist')], {
-			root: resolve('./')
+		new CleanWebpackPlugin([utils.resolve('./dist')], {
+			root: utils.resolve('./')
 		}),
 		new CopyWebpackPlugin(
 			[{
@@ -142,7 +138,7 @@ module.exports = {
 				to: './'
 			}], {
 				ignore: ['*.js', '*.css', '*.ts', '*.scss', '*.less', '*.sass'],
-				context: resolve('src'),
+				context: utils.resolve('src'),
 			}
 		),
 		new StylelintWebpackPlugin(),
