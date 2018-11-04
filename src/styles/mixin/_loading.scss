@@ -1,0 +1,60 @@
+.xlading_bg {
+	background: #000;
+	opacity: 0.5;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 301;
+}
+
+.xloading {
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.xloading.full_page {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 301;
+}
+
+.xloading::after {
+	content: "";
+	display: inline-block;
+	margin-top: 30rpx;
+	height: 30rpx;
+	width: 60rpx;
+	border: 4rpx solid #00f;
+	border-top: 0;
+	border-radius: 0 0 30rpx 30rpx;
+	transform-origin: top center;
+	box-sizing: border-box;
+	animation: spin 1s linear infinite;
+}
+
+@-webkit-keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);
+	}
+}

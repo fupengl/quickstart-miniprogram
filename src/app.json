@@ -1,53 +1,12 @@
 {
-  "pages": [
-    "pages/home/index",
+  "pages":[
     "pages/index/index",
-    "pages/shop/index"
+    "pages/logs/logs"
   ],
-  "subpackages":[
-    {
-      "root":"subpackages/product",
-      "pages":[
-        "productList/index",
-        "productDetail/index",
-        "buy/index"
-      ]
-    },
-    {
-      "root":"subpackages/article",
-      "pages":[
-        "articleList/index"
-      ]
-    }
-  ],
-  "tabBar": {
-    "backgroundColor": "#FFFFFF",
-    "color": "#000000",
-    "selectedColor": "#656CE8",
-    "list": [{
-        "pagePath": "pages/home/index",
-        "iconPath": "resources/tabbar-home.png",
-        "selectedIconPath": "resources/tabbar-home-color.png",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/index/index",
-        "iconPath": "resources/tabbar-info.png",
-        "selectedIconPath": "resources/tabbar-info-color.png",
-        "text": "客户资料"
-      },
-      {
-        "pagePath": "pages/shop/index",
-        "iconPath": "resources/tabbar-user.png",
-        "selectedIconPath": "resources/tabbar-user-color.png",
-        "text": "我的"
-      }
-    ]
-  },
-  "window": {
-    "backgroundTextStyle": "dark",
-    "navigationBarBackgroundColor": "#37363B",
-    "navigationBarTitleText": "微信小程序",
-    "navigationBarTextStyle": "white"
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Wechat",
+    "navigationBarTextStyle":"black"
   }
 }

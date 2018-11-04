@@ -1,5 +1,0 @@
-<view>
-    <image src="../../resources/images/avatar.jpeg" class="avatar"></image>
-    <view class="content">我的</view>        
-    <view class="footer"></view>
-</view>

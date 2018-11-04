@@ -1,0 +1,56 @@
+{
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "scss/at-mixin-argumentless-call-parentheses": "always",
+    "scss/dollar-variable-colon-newline-after": "always-multi-line",
+    "scss/dollar-variable-colon-space-after": "always",
+    "scss/dollar-variable-colon-space-before": "never",
+    "scss/dollar-variable-no-missing-interpolation": true,
+    "scss/double-slash-comment-whitespace-inside": "always",
+    "scss/double-slash-comment-inline": "never",
+    "scss/operator-no-newline-after": true,
+    "scss/operator-no-newline-before": true,
+    "scss/operator-no-unspaced": true,
+    "scss/selector-no-redundant-nesting-selector": true,
+    "no-empty-source": true,
+    "selector-list-comma-newline-after": "always-multi-line",
+    "indentation": "tab",
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": [
+          "mixin",
+          "extend",
+          "include",
+          "if",
+          "else",
+          "function"
+        ]
+      }
+    ],
+    "unit-no-unknown": [
+      true,
+      {
+        "ignoreUnits": [
+          "rpx"
+        ]
+      }
+    ],
+    "selector-type-no-unknown": [
+      true,
+      {
+        "ignoreTypes": [
+          "page",
+          "navigator",
+          "picker",
+          "image",
+          "open-data",
+          "scroll-view"
+        ]
+      }
+    ]
+  }
+}
