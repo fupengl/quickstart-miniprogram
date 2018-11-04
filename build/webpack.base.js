@@ -1,11 +1,12 @@
 const path = require('path')
+const fs = require('fs')
 const cleanWebpackPlugin = require("clean-webpack-plugin")
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const glob = require("glob")
 const wxAppWebpackPlugin = require("bx-wxapp-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const utils = require("./utils")
+const config = require("../config")
 const wxappNpmPlugin = require("bx-wxapp-npm-plugin")
 
 
@@ -13,28 +14,34 @@ function resolve(dir) {
     return path.join(__dirname, "../", dir)
 }
 
-function getEntry(rootSrc, pattern) {
-    const files = glob.sync(path.resolve(rootSrc, pattern))
-    return files.reduce((res, file) => {
-        const info = path.parse(file)
-        const key = "/" + info.dir.slice(rootSrc.length + 1) + '/' + info.name
+function getAppEntry() {
+    const info = path.parse(config.entry)
+    const {pages = [], subpackages = []} = require(`${resolve(info.dir)}/app.json`)
+    subpackages.forEach(sp => {
+        if (sp.pages.length) {
+            sp.pages.forEach(page => {
+                pages.push(path.join(sp.root, page))
+            })
+        }
+    })
+    let files = []
+    pages.forEach(page => {
+        files.push(path.join(resolve(info.dir), page + '.js'),
+            path.join(resolve(info.dir), page + '.ts'))
+    })
+    return files.filter(file => {
+        if (fs.existsSync(file)) return file
+    }).reduce((res, file) => {
+        const fileInfo = path.parse(file)
+        const key = "/" + fileInfo.dir.slice(resolve(info.dir).length + 1) + '/' + fileInfo.name
         res[key] = path.resolve(file)
         return res
     }, {})
 }
 
-//应用入口
-const appEntry = {
-    app: './src/app.js'
-}
-//页面入口
-const pagesEntry = getEntry(resolve('./src'), 'pages/**/index.js')
-//组件入口
-const componentsEntry = getEntry(resolve('./src'), 'components/**/index.js')
-//分包页面
-const subpackages = getEntry(resolve('./src'), 'subpackages/**/index.js')
+const appEntry = {app: resolve(config.entry)}
 
-const entry = Object.assign({}, appEntry, pagesEntry, componentsEntry, subpackages)
+const entry = Object.assign({}, appEntry, getAppEntry())
 module.exports = {
     entry: entry,
     output: {
@@ -62,20 +69,13 @@ module.exports = {
                     minChunks: 2,
                     name: "commons",
                     minSize: 0
-                },
-                // product: {
-                //     chunks: 'all',
-                //     test: /[\\/]subpackages[\\/]product[\\/]/,
-                //     minChunks: 2,
-                //     name:"subpackages/product/test",
-                //     minSize:0
-                // }
+                }
             }
         },
         runtimeChunk: 'single'
     },
     resolve: {
-        extensions: ['.js', '.json', '.ts', ],
+        extensions: ['.js', '.json', '.ts',],
         alias: {
             '@': resolve('src'),
         },
@@ -83,10 +83,10 @@ module.exports = {
     },
     module: {
         rules: [{
-                test: /\.js$/,
-                loader: "babel-loader",
-                exclude: /node_modules/,
-            },
+            test: /\.js$/,
+            loader: "babel-loader",
+            exclude: /node_modules/,
+        },
             {
                 test: /\.(sa|sc|c|le)ss$/,
                 exclude: /node_modules/,

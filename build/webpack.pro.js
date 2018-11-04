@@ -7,7 +7,7 @@ const webpack = require('webpack')
 module.exports = merge(common,
     {
         mode: "production",
-        "devtool": "source-map",
+        devtool: "source-map",
         plugins: [
             new webpack.DefinePlugin({
                 'process.env': config.build.env
