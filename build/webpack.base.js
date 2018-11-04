@@ -100,7 +100,7 @@ module.exports = {
 				exclude: /node_modules/,
 				use: [
 					{
-						loader: 'babel-loader'
+						loader: 'ts-loader'
 					},
 					{
 						loader: 'tslint-loader'
@@ -112,12 +112,16 @@ module.exports = {
 				exclude: /node_modules/,
 				use: [
 					MiniCssExtractPlugin.loader,
-					'css-loader',
-					'sass-loader',
+					{
+						loader: 'postcss-loader'
+					},
+					{
+						loader: 'sass-loader'
+					},
 				],
 			},
 			{
-				test: /\.(woff|woff2|eot|ttf|svg|png|gif|jpeg|jpg)\??.*$/,
+				test: /\.(woff|woff2|eot|ttf|svg|png|gif|jpeg|jpg|wxs)\??.*$/,
 				loader: 'url-loader',
 				query: {
 					//低于5000会被转化为base64
