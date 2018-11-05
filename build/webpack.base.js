@@ -12,20 +12,33 @@ const config = require('../config');
 
 function getAppEntry() {
 	const info = path.parse(config.entry);
+	const entryFile = [];
 	const { pages = [],
 		subpackages = [] } = require(`${utils.resolve(info.dir)}/app.json`);
+	entryFile.push(...pages.map(page => path.resolve(utils.resolve(info.dir), page)));
 	subpackages.forEach(sp => {
 		if (sp.pages.length) {
 			sp.pages.forEach(page => {
-				pages.push(path.join(sp.root, page));
+				entryFile.push(path.resolve(
+					utils.resolve(info.dir),
+					path.join(sp.root, page)));
 			});
 		}
 	});
-	console.log(pages);
+	entryFile.forEach(page => {
+		const jsonFile = `${page}.json`;
+		if (fs.existsSync(jsonFile)) {
+			const { usingComponents = {} } = require(jsonFile);
+			Object.values(usingComponents).forEach(component => {
+				entryFile.push(component[0] === '/' ?
+					path.join(utils.resolve(info.dir), component) :
+					path.resolve(page, component));
+			});
+		}
+	});
 	let files = [];
-	pages.forEach(page => {
-		files.push(path.join(utils.resolve(info.dir), page + '.js'),
-			path.join(utils.resolve(info.dir), page + '.ts'));
+	entryFile.forEach(page => {
+		files.push(page + '.js', page + '.ts');
 	});
 	return files.filter(file => {
 		if (fs.existsSync(file)) return file;

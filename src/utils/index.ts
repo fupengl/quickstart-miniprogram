@@ -7,7 +7,7 @@ export const queryStringfy = (params: object = {}) => {
     return '';
 };
 
-export const formatDate = (timestamp: string | number = new Date().valueOf(), fmt: string = 'yyyy-MM-dd hh:mm:ss'): string => {
+export function formatDate (timestamp: string | number = new Date().valueOf(), fmt: string = 'yyyy-MM-dd hh:mm:ss'): string {
     if (typeof timestamp === 'string') {
         timestamp = parseInt(timestamp, 10);
     }
@@ -48,9 +48,9 @@ export const formatDate = (timestamp: string | number = new Date().valueOf(), fm
         }
     }
     return fmt;
-};
+}
 
-export const deepClone = (obj: any): any => {
+export function deepClone(obj: any): any {
     if (typeof obj !== 'object' || obj === null) {
         return obj;
     }
@@ -72,7 +72,7 @@ export const deepClone = (obj: any): any => {
 
         return newObj;
     }
-};
+}
 
 export const strFormat = (result: string = '', args: any = {}): string => {
     for (const key in args) {
