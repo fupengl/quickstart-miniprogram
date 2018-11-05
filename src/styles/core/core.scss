@@ -1,23 +1,2 @@
 @import 'base';
 @import 'weui';
-
-page {
-	height: 100%;
-	background: $white;
-	overflow-y: auto;
-	overflow-x: hidden;
-	letter-spacing: 1rpx;
-	font-size: 36rpx;
-	position: relative;
-}
-
-.container {
-	height: 100%;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	background: $white;
-	position: relative;
-	word-break: break-all;
-}

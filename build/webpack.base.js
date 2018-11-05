@@ -12,7 +12,8 @@ const config = require('../config');
 
 function getAppEntry() {
 	const info = path.parse(config.entry);
-	const { pages = [], subpackages = [] } = require(`${utils.resolve(info.dir)}/app.json`);
+	const { pages = [],
+		subpackages = [] } = require(`${utils.resolve(info.dir)}/app.json`);
 	subpackages.forEach(sp => {
 		if (sp.pages.length) {
 			sp.pages.forEach(page => {
@@ -71,7 +72,7 @@ module.exports = {
 		runtimeChunk: 'single'
 	},
 	resolve: {
-		extensions: ['.js', '.json', '.ts', ],
+		extensions: ['.js', '.json', '.ts'],
 		alias: Object.assign({}, config.alias, {
 			'@': utils.resolve('src'),
 		}),
@@ -109,6 +110,9 @@ module.exports = {
 				use: [
 					MiniCssExtractPlugin.loader,
 					{
+						loader: 'css-loader'
+					},
+					{
 						loader: 'postcss-loader'
 					},
 					{
@@ -117,12 +121,11 @@ module.exports = {
 				],
 			},
 			{
-				test: /\.(woff|woff2|eot|ttf|svg|png|gif|jpeg|jpg|wxs)\??.*$/,
+				test: /\.(woff|woff2|eot|ttf|svg|png|gif|jpeg|jpg)\??.*$/,
 				loader: 'url-loader',
 				query: {
-					//低于5000会被转化为base64
 					limit: 50000,
-					name: utils.assetsPath('img/[name].[ext]')
+					name: utils.assetsPath('image/[name].[ext]')
 				}
 			}
 		]
@@ -137,16 +140,16 @@ module.exports = {
 				from: './',
 				to: './'
 			}], {
-				ignore: ['*.js', '*.css', '*.ts', '*.scss', '*.less', '*.sass'],
+				ignore: ['*.js', '*.css', '*.ts', '*.scss', '*.less', '*.sass', '*.wxss'],
 				context: utils.resolve('src'),
 			}
 		),
 		new StylelintWebpackPlugin(),
+		new WxAppWebpackPlugin(),
 		new MiniCssExtractPlugin({
 			filename: '[name].wxss'
 		}),
 		new LodashModuleReplacementPlugin(),
-		new WxAppWebpackPlugin(),
 		new WxappNpmPlugin()
 	]
 };

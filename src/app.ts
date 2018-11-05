@@ -1,3 +1,4 @@
+import './app.scss';
 import Store, { createStore } from './store';
 import WxApi, { promisify } from './utils/wxApi';
 
