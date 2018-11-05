@@ -21,6 +21,7 @@ function getAppEntry() {
 			});
 		}
 	});
+	console.log(pages);
 	let files = [];
 	pages.forEach(page => {
 		files.push(path.join(utils.resolve(info.dir), page + '.js'),
