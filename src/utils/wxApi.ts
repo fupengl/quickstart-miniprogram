@@ -121,6 +121,7 @@ export const promisify = () => {
         'getImageInfo',
         'setClipboardData',
         'makePhoneCall',
+        'uploadFile',
         'chooseImage'
     ];
 

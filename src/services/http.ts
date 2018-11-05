@@ -110,20 +110,17 @@ export class HttpService {
                 };
             }
             (opt as WXNetAPIUploadFileObj).name = file.upload.key;
-            wx.uploadFile(Object.assign(opt, {
-                success: (data: IResponse) => {
-                    if (data.statusCode === 200) {
-                        const result = JSON.parse(data.data);
-                        // const path = file.upload.prefix + result.uuid;
-                        console.warn('upload success-->', result);
-                        resolve(...[result, data.header]);
-                    }
-                    reject(data.errMsg);
-                },
-                fail: (err: IResponse) => {
-                    reject(err);
+            wx.Promise.uploadFile().then((data: IResponse) => {
+                if (data.statusCode === 200) {
+                    const result = JSON.parse(data.data);
+                    // const path = file.upload.prefix + result.uuid;
+                    console.warn('upload success-->', result);
+                    resolve(...[result, data.header]);
                 }
-            }));
+                reject(data.errMsg);
+            }).catch((err: IResponse) => {
+                reject(err);
+            });
         });
     }
 
