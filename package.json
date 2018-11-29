@@ -15,7 +15,8 @@
   "dependencies": {
     "miniprogram-navigation-bar": "0.0.4",
     "miniprogram-recycle-view": "0.0.6",
-    "miniprogram-slide-view": "0.0.3"
+    "miniprogram-slide-view": "0.0.3",
+    "postcss-load-config": "^2.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -68,6 +69,7 @@
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "lodash-webpack-plugin": "^0.11.5",
+    "miniprogram-webpack-plugin": "^0.0.8",
     "node-sass": "^4.9.3",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-load-plugins": "^2.3.0",
@@ -92,8 +94,7 @@
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
     "webpack-dev-middleware-hard-disk": "^1.12.1",
-    "webpack-merge": "^4.1.4",
-    "miniprogram-webpack-plugin": "^0.0.8"
+    "webpack-merge": "^4.1.4"
   },
   "engines": {
     "node": ">= 4.0.0",

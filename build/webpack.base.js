@@ -97,7 +97,7 @@ module.exports = {
 				from: './',
 				to: './'
 			}], {
-				ignore: ['*.js', '*.css', '*.ts', '*.scss', '*.less', '*.sass', '*.wxss', '.wxml'],
+				ignore: ['*.js', '*.css', '*.ts', '*.scss', '*.less', '*.sass', '*.wxss', '*.wxml', '*.json'],
 				context: srcDir,
 			}
 		),
