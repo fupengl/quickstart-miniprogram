@@ -1,9 +1,9 @@
+const config = require('../config');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const common = require('./webpack.base');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const config = require('../config');
-const webpack = require('webpack');
 
 module.exports = merge(common,
 	{

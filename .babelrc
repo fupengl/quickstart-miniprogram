@@ -23,6 +23,7 @@
         "loose": false
       }
     ],
+    "@babel/plugin-transform-async-to-generator",
     "@babel/plugin-transform-parameters",
     "@babel/plugin-transform-spread",
     "@babel/plugin-syntax-dynamic-import",

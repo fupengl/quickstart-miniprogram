@@ -13,5 +13,10 @@ console.log(chalk.green('> Starting dev compiler...'));
 
 require('webpack-dev-middleware-hard-disk')(compiler, {
 	publicPath: webpackConfig.output.publicPath,
-	quiet: true
+	quiet: true,
+	watchOptions: {
+		ignored: /dist|manifest/,
+		aggregateTimeout: 300,
+		poll: true
+	},
 });
