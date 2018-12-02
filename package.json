@@ -16,7 +16,7 @@
     "miniprogram-navigation-bar": "0.0.4",
     "miniprogram-recycle-view": "0.0.6",
     "miniprogram-slide-view": "0.0.3",
-    "wapp-cli": "^0.0.3"
+    "wapp-cli": "^0.0.61"
   },
   "devDependencies": {
     "@types/weixin-app": "^2.2.11",
