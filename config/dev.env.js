@@ -1,7 +1,4 @@
-const merge = require('webpack-merge');
-const prodEnv = require('./prod.env');
-
-module.exports = merge(prodEnv, {
+module.exports = {
 	ENV: '"development"',
 	BASE_API: "'http://localhost:8081'"
-});
+};
