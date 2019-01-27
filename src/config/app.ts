@@ -1,9 +1,16 @@
+
+declare var process: {
+    env: IEnvironmentMode
+};
+
+// process env
 interface IEnvironmentMode {
     ENV: string;
     BASE_API: number;
     APP_ID: string;
 }
 
+// app config
 interface IConfig {
     wxAppId: string;
 }
@@ -12,11 +19,10 @@ interface IConfig {
 const version: string = '1.0.0';
 
 const config: IConfig = {
-    wxAppId: 'wx app id'
+    wxAppId: wx.getAccountInfoSync().miniProgram.appId
 };
 
 function getCurrentConfig(): IConfig & IEnvironmentMode {
-    // @ts-ignore
     return Object.assign({}, config, process.env as IEnvironmentMode);
 }
 

@@ -15,6 +15,7 @@
     "scss/operator-no-newline-before": true,
     "scss/operator-no-unspaced": true,
     "scss/selector-no-redundant-nesting-selector": true,
+    "no-descending-specificity": null,
     "no-empty-source": true,
     "selector-list-comma-newline-after": "always-multi-line",
     "indentation": "tab",
@@ -27,7 +28,8 @@
           "include",
           "if",
           "else",
-          "function"
+          "function",
+          "each"
         ]
       }
     ],
@@ -48,7 +50,8 @@
           "picker",
           "image",
           "open-data",
-          "scroll-view"
+          "scroll-view",
+          "icon"
         ]
       }
     ]

@@ -73,29 +73,26 @@ export class HttpService {
             : BASE_API + '/' + uri;
     }
 
-    private static async _parseRequestOptions(req: WXNetAPIRequestObj, isAuth: boolean): Promise<WXNetAPIRequestObj> {
-        const { pin_appid, corp_id } = wx.getExtConfigSync();
+    private static async _parseRequestOptions(req: wx.RequestOption, isAuth: boolean): Promise<wx.RequestOption> {
         if (isAuth) {
             const { pin_uid, token } = await getApp().dispatch('getToken');
             if (!req.header) {
                 req.header = {};
             }
             req.url = strFormat(req.url, { pin_uid });
-            Object.assign(req.header, { 'X-Pin-Authorization': token, 'X-Pin-CorpID': corp_id });
         }
-        req.url = strFormat(req.url, { pin_appid });
         return req;
     }
 
     private static _parseResponse(res: IResponse): any[] {
         // hack
-        wx.hideLoading();
+        wx.hideLoading({});
         return [res.data, res.header];
     }
 
     // currently, post or get method both go into this function
     jsonRequest(data: IRequestParams, config: IRequestExtraConfig): Promise<any> {
-        return this.preRequest(data, config);
+        return this.preRequest(data as wx.RequestOption, config);
     }
 
     fileUpload(opt: IUploadFile): Promise<any> {
@@ -109,8 +106,8 @@ export class HttpService {
                     request_id: generateRequestID()
                 };
             }
-            (opt as WXNetAPIUploadFileObj).name = file.upload.key;
-            wx.Promise.uploadFile().then((data: IResponse) => {
+            (opt as wx.UploadFileOption).name = file.upload.key;
+            getApp().wxApi.uploadFile().then((data: IResponse) => {
                 if (data.statusCode === 200) {
                     const result = JSON.parse(data.data);
                     // const path = file.upload.prefix + result.uuid;
@@ -125,7 +122,7 @@ export class HttpService {
     }
 
     // [review] note: 目前只考虑多并发中有且仅有一个锁 即不兼容并发中多个 lock 为 true 的情况
-    async preRequest(req: WXNetAPIRequestObj, config: IRequestExtraConfig): Promise<any> {
+    async preRequest(req: wx.RequestOption, config: IRequestExtraConfig): Promise<any> {
         const { hasLoading = false, isLock = false } = config;
 
         // detect current network
@@ -162,13 +159,13 @@ export class HttpService {
     }
 
     // todo related params
-    async request(req: WXNetAPIRequestObj, config: IRequestExtraConfig): Promise<any> {
+    async request(req: wx.RequestOption, config: IRequestExtraConfig): Promise<any> {
         const { isAuth = true } = config;
-        req = await HttpService._parseRequestOptions(req as WXNetAPIRequestObj, isAuth);
+        req = await HttpService._parseRequestOptions(req as wx.RequestOption, isAuth);
         console.warn('request start, config: ', config, req);
         return new Promise((resolve, reject) => {
             req.url = HttpService.getUrl(req.url);
-            wx.Promise.request(req).then(async (res: IResponse) => {
+            getApp().wxApi.request(req).then(async (res: IResponse) => {
                 const { statusCode, data } = res;
 
                 if (statusCode >= 200 && statusCode <= 300) {
@@ -177,7 +174,7 @@ export class HttpService {
                     reLoginTimes = 0;
                     try {
                         await getApp().dispatch('login');
-                        req = await HttpService._parseRequestOptions(req as WXNetAPIRequestObj, isAuth);
+                        req = await HttpService._parseRequestOptions(req as wx.RequestOption, isAuth);
                         reLoginTimes = 1;
                         return resolve(await this.request(req, config));
                     } catch (error) {

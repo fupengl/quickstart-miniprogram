@@ -1,4 +1,3 @@
-
 import { showToast } from '../../utils/wxApi';
 
 import { AccountService } from '../../services/account';
@@ -17,9 +16,7 @@ export default {
     self.requestLock.count++;
     self.requestLock.request = new Promise(async (resolve, reject) => {
       try {
-        const res = await wx.Promise.login();
-
-        const { pin_appid, corp_id } = wx.getExtConfigSync();
+        const res = await getApp().wxApi.login();
 
         const { data } = await accountService.Login({
           code: res.code

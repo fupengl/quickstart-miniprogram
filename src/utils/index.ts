@@ -1,4 +1,4 @@
-export const queryStringfy = (params: object = {}) => {
+export const queryStringfy = (params: object = {}): string => {
     if (Object.keys(params).length) {
         return Object.keys(params).map(key =>
             `${encodeURIComponent(key)}=${encodeURIComponent((params as any)[key])}`
@@ -7,7 +7,7 @@ export const queryStringfy = (params: object = {}) => {
     return '';
 };
 
-export function formatDate (timestamp: string | number = new Date().valueOf(), fmt: string = 'yyyy-MM-dd hh:mm:ss'): string {
+export const formatDate = (timestamp: string | number = new Date().valueOf(), fmt: string = 'yyyy-MM-dd hh:mm:ss'): string => {
     if (typeof timestamp === 'string') {
         timestamp = parseInt(timestamp, 10);
     }
@@ -48,9 +48,9 @@ export function formatDate (timestamp: string | number = new Date().valueOf(), f
         }
     }
     return fmt;
-}
+};
 
-export function deepClone(obj: any): any {
+export const deepClone = (obj: any): any => {
     if (typeof obj !== 'object' || obj === null) {
         return obj;
     }
@@ -72,8 +72,13 @@ export function deepClone(obj: any): any {
 
         return newObj;
     }
-}
+};
 
+/**
+ * 格式化字符串
+ * @param result 格式化字符串 eg：`user: {name}`
+ * @param args 格式化数据 eg： { name："123" }
+ */
 export const strFormat = (result: string = '', args: any = {}): string => {
     for (const key in args) {
         const reg = new RegExp('({' + key + '})', 'g');
@@ -82,7 +87,11 @@ export const strFormat = (result: string = '', args: any = {}): string => {
     return result;
 };
 
-export const strLen = (str: string) => {
+/**
+ * 获取字符串英文字符长度
+ * @param str
+ */
+export const strLen = (str: string): number => {
     let count = 0;
     for (let i = 0, len = str.length; i < len; i++) {
         count += str.charCodeAt(i) < 256 ? 1 : 2;
@@ -160,4 +169,20 @@ export function formatTime(time: number, option?: string) {
 export const validateMobile = (num: string): boolean => {
     const regexp = /^1[3|4|5|6|7|8|9]\d{9}$/;
     return regexp.test(num);
+};
+
+// 获取用户是否授权保存到相册 wx.saveImageToPhotosAlbum, wx.saveVideoToPhotosAlbum
+export const getUserwritePhotosAlbum = async () => {
+    return new Promise((resolve) => {
+        wx.getSetting({
+            complete: (res: any) => {
+                console.log(res, '-----auth-------wx.getSetting------');
+                let result = false;
+                if (res && res.authSetting && res.authSetting['scope.writePhotosAlbum']) {
+                    result = true;
+                }
+                resolve(result);
+            }
+        });
+    });
 };

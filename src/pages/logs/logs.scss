@@ -1,5 +1,11 @@
-@import '~style';
+.log {
+	&-list {
+		display: flex;
+		flex-direction: column;
+		padding: 40rpx;
+	}
 
-.logs {
-	font-size: 40rpx;
+	&-item {
+		margin: 10rpx;
+	}
 }

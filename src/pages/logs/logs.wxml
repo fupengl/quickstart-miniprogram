@@ -1,1 +1,8 @@
-<view class="logs">logs</view>
+<!--logs.wxml-->
+<wxs src="../../wxs/index.wxs" module="logic"></wxs>
+
+<view class="container log-list">
+  <block wx:for="{{logs}}" wx:for-item="log" wx:key="*this">
+    <text class="log-item">{{index + 1}}. {{logic.dateStringFormat(log)}}</text>
+  </block>
+</view>

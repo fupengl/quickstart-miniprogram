@@ -4,6 +4,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "strictNullChecks": true,
+    "downlevelIteration": true,
     "target": "es5",
     "noImplicitAny": false,
     "strict": true,
@@ -12,22 +13,21 @@
     "baseUrl": "./src/",
     "outDir": "./dist/",
     "noImplicitThis": false,
-    "removeComments": false,
+    "removeComments": true,
     "lib": [
       "es5",
+      "es6",
       "es2015",
+      "es7",
       "es2016",
-      "es2017",
-      "es2015.promise",
-      "es2015.collection",
-      "es2015.iterable",
-      "es2015.core",
-      "dom"
+      "es2018",
+      "es2017"
     ],
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"],
+      "@S/*": ["./services/*"],
+      "@T/*": ["./utils/*"],
+      "@C/*": ["./config/*"]
     }
   },
   "awesomeTypescriptLoaderOptions": {},
@@ -36,6 +36,6 @@
     "node_modules"
   ],
   "include": [
-    "src/**/*.ts"
+    "**/*.ts"
   ]
 }

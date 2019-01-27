@@ -1,40 +1,20 @@
-@import '~style';
+.userinfo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
-.index {
-	font-size: 40rpx;
+	&-avatar {
+		width: 128rpx;
+		height: 128rpx;
+		margin: 20rpx;
+		border-radius: 50%;
+	}
+
+	&-nickname {
+		color: #aaa;
+	}
 }
 
-.commodity_screen {
-	width: 100%;
-	height: 100%;
-	position: fixed;
-	top: 0;
-	left: 0;
-	background: #000;
-	opacity: 0.2;
-	overflow: hidden;
-	z-index: 1000;
-	color: #fff;
-}
-
-.commodity_attr_box {
-	width: 100%;
-	overflow: hidden;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	z-index: 2000;
-	background: #000;
-	padding-top: 20rpx;
-	transition: transform 200ms linear 0ms;
-	transform: translateY(300rpx);
-	transform-origin: 50% 50% 0;
-}
-
-.show {
-	transform: translateY(0);
-}
-
-.hide {
-	transform: translateY(300rpx);
+.usermotto {
+	margin-top: 200px;
 }

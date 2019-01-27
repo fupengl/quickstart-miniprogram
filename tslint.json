@@ -42,7 +42,8 @@
     "forin": false,
     "indent": [
       true,
-      "spaces"
+      "spaces",
+      2
     ],
     "noImplicitThis": false,
     "jsdoc-format": false,

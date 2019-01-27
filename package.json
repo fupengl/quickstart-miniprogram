@@ -15,13 +15,13 @@
   "author": "fupengl",
   "repository": "fupengl/quickstart-miniprogram",
   "dependencies": {
+    "global": "^4.3.2",
     "miniprogram-navigation-bar": "0.0.4",
     "miniprogram-recycle-view": "0.0.6",
     "miniprogram-slide-view": "0.0.3",
-    "wapp-cli": "^0.0.64"
+    "wapp-cli": "^0.0.71"
   },
   "devDependencies": {
-    "@types/weixin-app": "^2.2.11",
     "babel-eslint": "^10.0.1",
     "cross-env": "^5.2.0",
     "eslint": "^5.8.0",

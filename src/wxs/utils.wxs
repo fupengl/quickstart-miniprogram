@@ -1,0 +1,58 @@
+module.exports = {
+  dateStringFormat: function (value, format = 'yyyy-MM-dd') {
+    var result = '';
+    if (value != undefined && value != '') {
+      var date = value.substring(0, 19);
+      // wxs IOS版本不支持时间中带有-，需要转成为/
+      var regexp = getRegExp('-', 'g');
+      date = value.replace(regexp, '/');
+      date = getDate(date);
+      var year = date.getFullYear();
+      var montTmp = parseInt(date.getMonth()) + 1;
+      var month = montTmp >= 10 ? montTmp : '0' + montTmp;
+      var day = date.getDate() >= 10 ? date.getDate() : '0' + date.getDate();
+      var hour = date.getHours() >= 10 ? date.getHours() : '0' + date.getHours();
+      var min = date.getMinutes() >= 10 ? date.getMinutes() : '0' + date.getMinutes();
+      var sec = date.getSeconds() >= 10 ? date.getSeconds() : '0' + date.getSeconds();
+      if (format.indexOf('yyyy') >= 0) {
+        result = year;
+      }
+      if (format.indexOf('MM') >= 0) {
+        var yindex = format.indexOf('yyyy');
+        if (yindex >= 0) {
+          result += format.substring(yindex + 4, yindex + 4 + 1);
+        }
+        result += month;
+      }
+      if (format.indexOf('dd') >= 0) {
+        var Mindex = format.indexOf('MM');
+        if (Mindex >= 0) {
+          result += format.substring(Mindex + 2, Mindex + 2 + 1);
+        }
+        result += day;
+      }
+      if (format.indexOf('hh') >= 0) {
+        var dindex = format.indexOf('dd');
+        if (dindex >= 0) {
+          result += ' ';
+        }
+        result += hour;
+      }
+      if (format.indexOf('mm') >= 0) {
+        var hindex = format.indexOf('hh');
+        if (hindex >= 0) {
+          result += format.substring(hindex + 2, hindex + 2 + 1);
+        }
+        result += min;
+      }
+      if (format.indexOf('ss') >= 0) {
+        var mindex = format.indexOf('mm');
+        if (mindex >= 0) {
+          result += format.substring(mindex + 2, mindex + 2 + 1);
+        }
+        result += sec;
+      }
+    }
+    return result;
+  }
+};

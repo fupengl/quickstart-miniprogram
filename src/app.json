@@ -3,15 +3,6 @@
     "pages/index/index",
     "pages/logs/logs"
   ],
-  "subpackages": [
-    {
-      "root": "pages/article",
-      "pages": [
-        "articleList/articleList",
-        "articleInfo/articleInfo"
-      ]
-    }
-  ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",

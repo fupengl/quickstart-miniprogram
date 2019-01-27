@@ -23,19 +23,19 @@ interface IAppInfo {
 
 // log module options
 export interface ILoggerOptions extends IAppInfo {
-    getLocation: boolean; // get user loacation
-    statShareApp: boolean; // capture shareApp
-    statPullDownFresh: boolean;
-    statReachBottom: boolean;
-    statApiSpeed: boolean;
-    apiMaxRequestTime: number;
+    getLocation?: boolean; // get user loacation
+    statShareApp?: boolean; // capture shareApp
+    statPullDownFresh?: boolean;
+    statReachBottom?: boolean;
+    statApiSpeed?: boolean;
+    apiMaxRequestTime?: number;
 }
 
 interface IReportData extends IAppInfo {
     rid: LogType;
     cat: ErrorType;
     data: ApiLog;
-    deviceInfo: WXSystemInfo;
+    deviceInfo: wx.GetSystemInfoSyncResult;
 }
 
 class Log {
@@ -69,7 +69,7 @@ class Log {
     // add slow api and err log
     createApiLog({ isError, timeCut, ...other }: ApiLog) {
         this.handelNetworkStatus();
-        if (timeCut > Log.options.apiMaxRequestTime || isError) {
+        if (timeCut > Log.options.apiMaxRequestTime! || isError) {
             this.createLog(LogType.SLOW_API, ErrorType.API_ERROR, {
                 timeCut,
                 ...other
@@ -99,7 +99,7 @@ class Log {
         wx.request({
             url: this.requestUrl,
             data: { logs },
-            method: 'post',
+            method: 'POST',
             success(resp) {
                 console.log(resp);
                 this.clearLog();
