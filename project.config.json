@@ -10,7 +10,7 @@
 	"miniprogramRoot": "dist/",
 	"compileType": "miniprogram",
 	"appid": "wxe8440a52dab9bd67",
-	"projectname": "webpack-wxapp",
+	"projectname": "quickstart-miniprogram",
 	"condition": {
 		"search": {
 			"current": -1,

@@ -1,12 +1,16 @@
 module.exports = {
-  dateStringFormat: function (value, format = 'yyyy-MM-dd') {
+  dateStringFormat: function (value, format = 'yyyy-MM-dd hh:mm') {
     var result = '';
     if (value != undefined && value != '') {
-      var date = value.substring(0, 19);
-      // wxs IOS版本不支持时间中带有-，需要转成为/
-      var regexp = getRegExp('-', 'g');
-      date = value.replace(regexp, '/');
-      date = getDate(date);
+      if (typeof value === 'string') {
+        var date = value.substring(0, 19);
+        var regexp = getRegExp('-', 'g');
+        value = value.replace(regexp, '/');
+      }
+      if (typeof value === 'number' && value.toString().length === 10) {
+        value = value * 1000
+      }
+      var date = getDate(value);
       var year = date.getFullYear();
       var montTmp = parseInt(date.getMonth()) + 1;
       var month = montTmp >= 10 ? montTmp : '0' + montTmp;

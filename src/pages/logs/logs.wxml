@@ -3,6 +3,6 @@
 
 <view class="container log-list">
   <block wx:for="{{logs}}" wx:for-item="log" wx:key="*this">
-    <text class="log-item">{{index + 1}}. {{logic.dateStringFormat(log)}}</text>
+    <text class="log-item">{{index + 1}}. {{logic.utils.dateStringFormat(log)}}</text>
   </block>
 </view>
