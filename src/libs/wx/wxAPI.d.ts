@@ -181,7 +181,7 @@ interface WXMediaAPI {
 
 interface WXGetStorageObj {
 	key: string;
-	success: (res: { data: any, [propName: string]: any }) => void;
+	success?: (res: { data: any, [propName: string]: any }) => void;
 	fail?: WXCommonCallback;
 	complete?: WXCommonCallback;
 }
@@ -360,6 +360,7 @@ interface WXContext {
 	setTextAlign(align: string);
 	setFillStyle(color: string);
 	setStrokeStyle(color: string);
+	strokeRect(x: number, y: number, width: number, height: number);
 	setGlobalAlpha(alpha: number);
 	setShadow(offsetX: number, offsetY: number, blur: number, color: string);
 	setFontSize(fontSize: number);
@@ -385,7 +386,7 @@ interface WXUIAPI {
 
 	createAnimation(obj: WXCreateAnimationObj): WXAnimation;
 
-	createCanvasContext(canvansId: string): WXContext;
+	createCanvasContext(canvansId: string, component?: Object): WXContext;
 	createContext(): WXContext;
 	drawCanvas(obj: { canvasId: string, actions: any[], reserve?: boolean });
 	canvasToTempFilePath(obj: { canvasId: string, destWidth?: number, destHeight?: number } & WXCommonObj);
@@ -411,6 +412,17 @@ interface IUserInfo {
 	[propName: string]: any
 }
 
+interface IWxAddress {
+	userName: string;
+	postalCode: string;
+	provinceName: string;
+	cityName: string;
+	countyName: string;
+	detailInfo: string;
+	nationalCode: string;
+	telNumber: string;
+	[propName: string]: any;
+}
 interface WXOpenAPI {
 	login(obj: { success?: (res: { errMsg: string, code: string, [propName: string]: any }) => void, fail?: WXCommonCallback, complete?: WXCommonCallback });
 	checkSession(obj: WXCommonObj);
@@ -447,7 +459,7 @@ interface IOptions {
 interface IProperties {
 	[propName: string]: {
 		type: any,
-		value: Boolean | string | Object | Array,
+		value?: Boolean | string | Object | Array,
 		observer?: Function;
 	};
 }

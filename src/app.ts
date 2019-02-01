@@ -1,7 +1,7 @@
 import Conf from '@/config';
-import { createLogger } from '@/libs/log';
+import { createLogger } from '@/libs/wx/log';
 import Store, { createStore } from '@/store';
-import WxApi from '@/utils/wxApi';
+import wxApi from '@/utils/wxApi';
 
 // dispatch request lock
 const requestLock: {
@@ -16,11 +16,11 @@ const requestLock: {
 
 App(Object.assign({
   requestLock,
-  WxApi,
+  wxApi,
   async onLaunch(options) {
-    // init store
+    // mount store in getApp().state
     createStore.call(this);
-    // init log
+    // mount logger in getApp().logger
     createLogger.call(this, {
       wxAppid: Conf.APP.config.wxAppId,
       version: Conf.APP.version
