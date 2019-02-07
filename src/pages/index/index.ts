@@ -1,3 +1,5 @@
+import router from '@C/route';
+
 Page({
   data: {
     motto: '点击 “编译” 以构建',
@@ -5,11 +7,9 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
   },
-  // 事件处理函数
+
   bindViewTap() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    });
+    getApp().wxApi.navigateTo​​(router.LOGS);
   },
 
   onLoad() {
@@ -24,5 +24,5 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     });
-  }
+  },
 });

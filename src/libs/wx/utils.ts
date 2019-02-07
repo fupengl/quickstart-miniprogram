@@ -14,18 +14,22 @@ export function wxPromise(func: (_: any) => void) {
 }
 
 /**
- * 格式化字符串
- * @param result 格式化字符串 eg：`user: {name}`
- * @param args 格式化数据 eg： { name："123" }
+ * format string
+ * @param str eg：`user: {name}`
+ * @param args eg： { name："123" }
  */
-export const strFormat = (result: string = '', args: any = {}): string => {
+export const strFormat = (str: string = '', args: any = {}): string => {
     for (const key in args) {
         const reg = new RegExp('({' + key + '})', 'g');
-        result = result.replace(reg, args[key]);
+        str = str.replace(reg, args[key]);
     }
-    return result;
+    return str;
 };
 
-export const MissingError = (...key: string[]) => {
-    console.error(`Missing parameters [${key.join(',')}]`);
+/**
+ * throw error
+ * @param keys params Array
+ */
+export const MissingError = (...keys: string[]) => {
+    console.error(`Missing parameters [${keys.join(',')}]`);
 };

@@ -1,6 +1,6 @@
 
 import { MissingError } from '@/libs/wx/utils';
-import ApiLog, { createApiLog } from './apiLog';
+import ApiLog from './apiLog';
 
 // rid type
 enum LogType {
@@ -11,6 +11,7 @@ enum LogType {
   DEVICE_ERROR = 'device_error'
 }
 
+// cat type
 enum ErrorType {
   JS_ERROR = 'term_report',
   API_ERROR = 'term_report',
@@ -37,7 +38,7 @@ interface IReportData extends IAppInfo {
   deviceInfo: wx.GetSystemInfoSyncResult;
 }
 
-class Log {
+export class Log {
   static networkType: string;
   static isConnected: boolean = true;
 
@@ -164,6 +165,5 @@ export function mountLogEvent() {
 // mount logger in App
 export function createLogger(options: ILoggerOptions) {
   this.logger = new Log(options);
-  this.createApiLog = createApiLog;
   mountLogEvent.call(this);
 }

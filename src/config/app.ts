@@ -1,29 +1,18 @@
 
-declare var process: {
-    env: IEnvironmentMode
-};
-
-// process env
-interface IEnvironmentMode {
-    ENV: string;
-    BASE_API: number;
-    APP_ID: string;
-}
-
-// app config
 interface IConfig {
-    wxAppId: string;
+  wxAppId: string;
 }
+
+// app custom config
+const config: IConfig = {
+  wxAppId: wx.getAccountInfoSync().miniProgram.appId
+};
 
 // app version
-const version: string = '1.0.0';
-
-const config: IConfig = {
-    wxAppId: wx.getAccountInfoSync().miniProgram.appId
-};
+const version: string = 'quickstart-miniprogram-1.0.0';
 
 function getCurrentConfig(): IConfig & IEnvironmentMode {
-    return Object.assign({}, config, process.env as IEnvironmentMode);
+  return Object.assign({}, config, process.env);
 }
 
 const currentConfig = getCurrentConfig();
@@ -32,7 +21,7 @@ console.warn('App Config', currentConfig);
 const isProd = currentConfig.ENV === 'production';
 
 export default {
-    version,
-    isProd,
-    config: currentConfig,
+  version,
+  isProd,
+  config: currentConfig,
 };

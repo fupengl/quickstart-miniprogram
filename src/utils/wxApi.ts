@@ -1,27 +1,28 @@
+import { wxPromise } from '@/libs/wx/utils';
 import CONFIG from '@C/index';
 import t from '@T/tools';
 
-export const showLoading = (options: wx.ShowLoadingOption) => {
-  wx.showLoading(Object.assign({
+export const showLoading = (options?: wx.ShowLoadingOption) => {
+  wx.showLoading(Object.assign({}, {
     title: '加载中',
     mask: 'true'
   }, options));
 };
 
-export const hideLoading = (options = {}) => {
+export const hideLoading = () => {
   wx.hideLoading({});
 };
 
-export const showToast = (options: wx.ShowToastOption) => {
-  wx.showToast(Object.assign({
+export const showToast = (options?: wx.ShowToastOption) => {
+  wx.showToast(Object.assign({}, {
     title: '成功',
     mask: 'true',
     icon: 'none',
-    duration: 1000
+    duration: CONFIG.THEME.toastDuration
   }, options));
 };
 
-export const showModal = (options: any) => {
+export const showModal = (options?: wx.ShowModalOption) => {
   return wx.showModal(Object.assign({}, {
     title: '提示',
     content: '',
@@ -40,24 +41,9 @@ const linkTo = ({ url, type, data }:
   // Here we just set it to `true` if you don't have auth stuff.
   const AUTH = true;
 
-  if (AUTH) {
-    switch (type) {
-      case 'navigateTo':
-        wx.navigateTo(t.getUrlQuery(url, data));
-        break;
-      case 'redirectTo':
-        wx.redirectTo(t.getUrlQuery(url, data));
-        break;
-      case 'switchTab':
-        wx.switchTab(t.getUrlQuery(url, data));
-        break;
-      case 'reLaunch':
-        wx.reLaunch(t.getUrlQuery(url, data));
-        break;
-      default: break;
-    }
-  } else {
+  if (!AUTH) {
     showModal({
+      title: '提示',
       content: '请登录后再访问',
       showCancel: false,
       success(e: any) {
@@ -65,6 +51,22 @@ const linkTo = ({ url, type, data }:
         // wx.reLaunch(LOGIN_PATH)
       }
     });
+    return;
+  }
+  switch (type) {
+    case 'navigateTo':
+      wx.navigateTo(t.getUrlQuery(url, data));
+      break;
+    case 'redirectTo':
+      wx.redirectTo(t.getUrlQuery(url, data));
+      break;
+    case 'switchTab':
+      wx.switchTab(t.getUrlQuery(url, data));
+      break;
+    case 'reLaunch':
+      wx.reLaunch(t.getUrlQuery(url, data));
+      break;
+    default: break;
   }
 };
 
@@ -96,8 +98,8 @@ const wxApi: any = {
   setTitle
 };
 
-// promisify
-export const promisify = () => {
+// promise wxApi
+(function promisify() {
 
   // 普通的要转换的函数
   const functionNames = [
@@ -124,21 +126,8 @@ export const promisify = () => {
   ];
 
   functionNames.forEach(fnName => {
-    wxApi[fnName] = (obj: any = {}) => {
-      return new Promise((resolve, reject) => {
-        obj.success = (res: any) => {
-          resolve(res);
-        };
-        obj.fail = (err: any) => {
-          console.error(`wx.${fnName} fail`, err);
-          reject(err);
-        };
-        wx[fnName](obj);
-      });
-    };
+    wxApi[fnName] = (opt: any) => wxPromise(wx[fnName])(opt);
   });
-
-  // 特殊改造的函数
 
   wxApi.getStorage = (key: string) => {
     return new Promise((resolve, reject) => {
@@ -160,7 +149,7 @@ export const promisify = () => {
         key,
         data: value,
         success: res => {
-          resolve(value); // 将数据返回
+          resolve(res); // 将数据返回
         },
         fail: err => {
           reject(err);
@@ -174,41 +163,15 @@ export const promisify = () => {
       wx.removeStorage({
         key,
         success: res => {
-          resolve(res); // 将数据返回
-        },
-        fail: err => {
-          reject(err);
-        }
-      });
-    });
-  };
-
-  wxApi.request = (options: any) => {
-    if (options.toast) {
-      wx.showToast({
-        title: options.toast.title || '加载中',
-        icon: 'loading'
-      });
-    }
-
-    return new Promise((resolve, reject) => {
-      wx.request({
-        url: options.url,
-        method: options.method || 'GET',
-        data: options.data,
-        header: options.header,
-        success: res => {
           resolve(res);
         },
         fail: err => {
-          console.error('wx.request fail [network]', options, err);
           reject(err);
         }
       });
     });
   };
-};
 
-promisify();
+})();
 
 export default wxApi;

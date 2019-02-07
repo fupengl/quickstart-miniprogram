@@ -1,14 +1,14 @@
 import apiLog, { createApiLog } from '@/libs/wx/log/apiLog';
-import { strFormat, wxPromise } from '../utils';
+import { strFormat, wxPromise } from '@/libs/wx/utils';
 
 type IFunction = (_: any) => any;
 
 class InterceptorManager {
 
-    static defaultFunc = data => data;
+    static defaultFunc: IFunction = data => data;
 
-    rejected: IFunction = InterceptorManager.defaultFunc; // fail
-    fulfilled: IFunction = InterceptorManager.defaultFunc; // success
+    rejected: IFunction = InterceptorManager.defaultFunc; // fail request
+    fulfilled: IFunction = InterceptorManager.defaultFunc; // success response
 
     use(fulfilled: IFunction = InterceptorManager.defaultFunc,
         rejected: IFunction = InterceptorManager.defaultFunc) {
@@ -42,7 +42,7 @@ export default class HttpClient {
             return uri;
         }
 
-        return uri.indexOf('/') === 0
+        return uri[0] === '/'
             ? this.baseHost + uri
             : this.baseHost + '/' + uri;
     }
@@ -110,11 +110,13 @@ export default class HttpClient {
         });
     }
 
+    // format request params
     private parseRequestOpt(opt, params: object = {}) {
         opt.url = this.getURI(opt.url, params);
         opt.method = opt.method ? opt.method.toUpperCase() : 'GET';
     }
 
+    // wx request
     private async request(opt) {
         try {
             opt = await Promise.resolve(this.interceptors.request.fulfilled(opt));

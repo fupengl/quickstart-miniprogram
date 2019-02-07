@@ -1,9 +1,5 @@
 import { showToast } from '../../utils/wxApi';
 
-import { AccountService } from '../../services/account';
-
-const accountService: any = new AccountService();
-
 export default {
   async login(state: any): Promise<any> {
     const self = getApp() || this;
@@ -14,27 +10,27 @@ export default {
 
     self.requestLock.status = true;
     self.requestLock.count++;
-    self.requestLock.request = new Promise(async (resolve, reject) => {
-      try {
-        const res = await getApp().wxApi.login();
+    // self.requestLock.request = new Promise(async (resolve, reject) => {
+    //   try {
+    //     const res = await getApp().wxApi.login();
 
-        const { data } = await accountService.Login({
-          code: res.code
-        });
+    //     const { data } = await accountService.Login({
+    //       code: res.code
+    //     });
 
-        self.commit('setToken', data);
-        resolve(data);
-      } catch (error) {
-        showToast({
-          title: '登陆失败，请稍后再试！'
-        });
-        reject(error);
-      } finally {
-        self.requestLock.status = false;
-        self.requestLock.request = null;
-        self.requestLock.count = 0;
-      }
-    });
+    //     self.commit('setToken', data);
+    //     resolve(data);
+    //   } catch (error) {
+    //     showToast({
+    //       title: '登陆失败，请稍后再试！'
+    //     });
+    //     reject(error);
+    //   } finally {
+    //     self.requestLock.status = false;
+    //     self.requestLock.request = null;
+    //     self.requestLock.count = 0;
+    //   }
+    // });
 
     try {
       return await self.requestLock.request;
