@@ -9,18 +9,26 @@ Page({
   },
 
   bindViewTap() {
-    getApp().wxApi.navigateTo​​(router.LOGS);
+    getApp().wxApi.navigateTo(router.LOGS).then(res => {
+      console.log(res);
+    });
   },
 
-  onLoad() {
-    const logs: number[] = wx.getStorageSync('logs') || [];
-    logs.unshift(Date.now());
-    wx.setStorageSync('logs', logs);
+  async onLoad() {
+    let logs: number[] = [];
+    try {
+      logs = await getApp().wxApi.getStorage('logs');
+    } catch (error) {
+      console.log(error);
+    } finally {
+      logs.unshift(Date.now());
+      getApp().wxApi.setStorage('logs', logs);
+    }
   },
 
   getUserInfo(e: any) {
     console.log(e);
-    this.setData!({
+    this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     });

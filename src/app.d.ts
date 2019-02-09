@@ -9,7 +9,7 @@ declare interface requestLock {
 declare interface IApp extends App.GetApp {
   logger
   state
-  wxApi
+  wxApi: wxApi
 
   request_id: number
   requestLock: requestLock

@@ -3,7 +3,7 @@
  * @param func 只接收带success fail的api
  */
 export function wxPromise(func: (_: any) => void) {
-    return (opt: any) => {
+    return (opt?: any): Promise<any> => {
         return new Promise((resolve, reject) => {
             func(Object.assign({}, opt, {
                 success: data => resolve(data),

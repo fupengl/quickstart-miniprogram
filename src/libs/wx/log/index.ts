@@ -2,47 +2,11 @@
 import { MissingError } from '@/libs/wx/utils';
 import ApiLog from './apiLog';
 
-// rid type
-enum LogType {
-  SLOW_API = 'slow_api',
-  ERROR_API = 'error_api',
-  SCRIPT_ERROR = 'js_error',
-  PAGE_ERROR = 'page_error',
-  DEVICE_ERROR = 'device_error'
-}
-
-// cat type
-enum ErrorType {
-  JS_ERROR = 'term_report',
-  API_ERROR = 'term_report',
-  NETWORK_ERROR = 'term_report'
-}
-
-interface IAppInfo {
-  version: string; // app version
-  wxAppid: string; // wx app id
-}
-
-// log module options
-export interface ILoggerOptions extends IAppInfo {
-  getLocation?: boolean; // get user loacation
-  statShareApp?: boolean; // capture shareApp
-  statApiSpeed?: boolean;
-  apiMaxRequestTime?: number;
-}
-
-interface IReportData extends IAppInfo {
-  rid: LogType;
-  cat: ErrorType;
-  data: ApiLog | string;
-  deviceInfo: wx.GetSystemInfoSyncResult;
-}
-
 export class Log {
   static networkType: string;
   static isConnected: boolean = true;
 
-  options: ILoggerOptions = {
+  options: wxLog.ILoggerOptions = {
     wxAppid: '',
     version: '',
     getLocation: false,
@@ -51,19 +15,20 @@ export class Log {
     apiMaxRequestTime: 300
   };
 
-  logs: IReportData[] = []; // all log
+  logs: wxLog.IReportData[] = []; // all log
   PageLog: any[] = []; // page event log
   AppLog: ApiLog[] = []; // app event log
 
   private requestUrl: string = 'https://app.pinquest.cn/api/oss/Report';
 
-  constructor({ wxAppid, version, ...options }: ILoggerOptions) {
+  constructor({ wxAppid, version, ...options }: wxLog.ILoggerOptions) {
     if (!wxAppid || !version) {
       MissingError('wxAppid', 'version');
       return;
     }
 
-    this.options = Object.assign({}, this.options, options);
+    this.options = Object.assign({}, this.options, options, { wxAppid, version });
+    console.warn('Log Options', this.options);
 
     this.handleNetworkStatus();
   }
@@ -72,13 +37,13 @@ export class Log {
   createApiLog({ isError, timeCut, ...other }: ApiLog) {
     this.handleNetworkStatus();
     if (timeCut > this.options.apiMaxRequestTime! || !isError) {
-      this.createLog(LogType.SLOW_API, ErrorType.API_ERROR, {
+      this.createLog(wxLog.LogType.SLOW_API, wxLog.ErrorType.API_ERROR, {
         timeCut,
         ...other
       } as ApiLog);
     }
     if (isError) {
-      this.createLog(LogType.ERROR_API, ErrorType.API_ERROR, {
+      this.createLog(wxLog.LogType.ERROR_API, wxLog.ErrorType.API_ERROR, {
         timeCut,
         ...other
       } as ApiLog);
@@ -87,11 +52,11 @@ export class Log {
 
   // add script error
   createScriptLog(err: string) {
-    this.createLog(LogType.SCRIPT_ERROR, ErrorType.JS_ERROR, err);
+    this.createLog(wxLog.LogType.SCRIPT_ERROR, wxLog.ErrorType.JS_ERROR, err);
   }
 
   // add log
-  createLog(rid: LogType, cat: ErrorType, data: string | ApiLog) {
+  createLog(rid: wxLog.LogType, cat: wxLog.ErrorType, data: string | ApiLog) {
     const { wxAppid, version } = this.options;
     this.logs.push({
       rid,
@@ -163,7 +128,7 @@ export function mountLogEvent() {
 }
 
 // mount logger in App
-export function createLogger(options: ILoggerOptions) {
+export function createLogger(options: wxLog.ILoggerOptions) {
   this.logger = new Log(options);
   mountLogEvent.call(this);
 }

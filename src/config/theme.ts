@@ -1,5 +1,6 @@
 export default {
-  disabledColor: '#394256',
-  mainColor: '#2384E8',
-  toastDuration: 2000
+  cancelColor: '#394256',
+  confirmColor: '#2384E8',
+  toastDuration: 2000,
+  toastMask: true
 };

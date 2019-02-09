@@ -1,5 +1,3 @@
-import { showToast } from '../../utils/wxApi';
-
 export default {
   async login(state: any): Promise<any> {
     const self = getApp() || this;
@@ -43,9 +41,6 @@ export default {
       return;
     }
     const self = getApp() || this;
-    if (!state.profile.account) {
-      await self.dispatch('login');
-    }
     // const account: any = self.getter('getAccount');
     // wechatService.AddWxaFormId({
     //     form_id: {
@@ -58,4 +53,4 @@ export default {
     // }).catch((err: any) => {
     // });
   }
-};
+} as wxStore.dispatchFunc;

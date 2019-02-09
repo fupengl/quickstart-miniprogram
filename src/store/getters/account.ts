@@ -16,4 +16,4 @@ export default {
         }
         return null;
     }
-};
+}as wxStore.getterFunc;
