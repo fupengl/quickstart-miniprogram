@@ -18,7 +18,9 @@
     "no-descending-specificity": null,
     "no-empty-source": true,
     "selector-list-comma-newline-after": "always-multi-line",
-    "indentation": "tab",
+    "indentation": [
+      "tab"
+    ],
     "at-rule-no-unknown": [
       true,
       {

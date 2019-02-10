@@ -9,6 +9,7 @@
     "start": "mpc serve",
     "dev:prod": "cross-env CONF=build mpc serve",
     "build:dev": "cross-env CONF=dev GENERATE_SOURCEMAP=false mpc build",
+    "lint:scss": "stylelint --fix src/**/*.scss",
     "sort": "npx sort-package-json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
