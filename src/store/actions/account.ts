@@ -1,37 +1,37 @@
+import accountService from '@S/accountService';
+
 export default {
   async login(state: any): Promise<any> {
-    const self = getApp() || this;
 
-    if (self.requestLock.count === 1) {
-      return await self.requestLock.request;
+    if (this.requestLock.request) {
+      return await this.requestLock.request;
     }
 
-    self.requestLock.status = true;
-    self.requestLock.count++;
-    // self.requestLock.request = new Promise(async (resolve, reject) => {
-    //   try {
-    //     const res = await getApp().wxApi.login();
+    this.requestLock.status = true;
+    this.requestLock.count++;
+    this.requestLock.request = new Promise(async (resolve, reject) => {
+      try {
+        const { code } = await this.wxApi.login();
 
-    //     const { data } = await accountService.Login({
-    //       code: res.code
-    //     });
+        const { data } = await accountService.Login({ code });
 
-    //     self.commit('setToken', data);
-    //     resolve(data);
-    //   } catch (error) {
-    //     showToast({
-    //       title: '登陆失败，请稍后再试！'
-    //     });
-    //     reject(error);
-    //   } finally {
-    //     self.requestLock.status = false;
-    //     self.requestLock.request = null;
-    //     self.requestLock.count = 0;
-    //   }
-    // });
+        this.commit('setToken', data);
+        resolve(data);
+      } catch (error) {
+        console.log(error);
+        this.wxApi.showToast({
+          title: '登陆失败，请稍后再试！'
+        });
+        reject(error);
+      } finally {
+        this.requestLock.status = false;
+        this.requestLock.request = null;
+        this.requestLock.count = 0;
+      }
+    });
 
     try {
-      return await self.requestLock.request;
+      return await this.requestLock.request;
     } catch (error) { }
   },
 

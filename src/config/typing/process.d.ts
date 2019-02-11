@@ -3,7 +3,7 @@
  */
 declare interface IEnvironmentMode {
   ENV: 'production' | 'development';
-  BASE_API: number;
+  BASE_API: string;
   APP_ID: string;
 }
 

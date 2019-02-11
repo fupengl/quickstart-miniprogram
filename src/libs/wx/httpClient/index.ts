@@ -110,7 +110,7 @@ export default class HttpClient {
       }
     }
 
-    return await this._request(opt);
+    return this._request(opt);
   }
 
   // format request params
