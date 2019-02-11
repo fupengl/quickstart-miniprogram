@@ -6,7 +6,7 @@ export class BaseService extends HttpClient {
     super(prefix);
 
     const self = this;
-    for (const k of Object.keys(apis)) {
+    for (const k in apis) {
       const { isJson = true, isFile = false, ...item } = apis[k];
       self[k] = (data: object = {}, params = {}, header = {}): Promise<any> => {
         const opt: wxHttpClient.requestOptions = t.deepClone(item);

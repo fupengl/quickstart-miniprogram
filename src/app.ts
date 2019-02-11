@@ -21,6 +21,7 @@ App({
         wxAppid: Conf.APP.config.wxAppId,
         version: Conf.APP.version
       });
+      // check network status
       await this.dispatch('detectNetwork');
     } catch (error) {
       console.log(error);
