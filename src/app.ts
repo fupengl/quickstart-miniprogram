@@ -10,16 +10,20 @@ App({
     request: null,
     count: 0
   },
-  onLaunch(options) {
-    // mount wxApi in getApp().wxApi
-    createWxApi.call(this, Conf.THEME);
-    // mount store in getApp().$state
-    createStore.call(this, store);
-    // mount logger in getApp().logger
-    createLogger.call(this, {
-      wxAppid: Conf.APP.config.wxAppId,
-      version: Conf.APP.version
-    });
-    this.dispatch('detectNetwork');
+  async onLaunch(options) {
+    try {
+      // mount wxApi in getApp().wxApi
+      createWxApi.call(this, Conf.THEME);
+      // mount store in getApp().$state
+      createStore.call(this, store);
+      // mount logger in getApp().logger
+      createLogger.call(this, {
+        wxAppid: Conf.APP.config.wxAppId,
+        version: Conf.APP.version
+      });
+      await this.dispatch('detectNetwork');
+    } catch (error) {
+      console.log(error);
+    }
   }
 });

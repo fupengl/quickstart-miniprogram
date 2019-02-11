@@ -1,16 +1,20 @@
-interface IApiModule {
-  [moduleName: string]: IModules;
-}
+declare namespace IApi {
 
-interface IModules {
-  [key: string]: IApi;
-}
+  interface api {
+    url: string;
+    method: 'get' | 'post' | 'delete' | 'put';
+    isAuth?: boolean; // add session_id
+    isJson?: boolean; // json or formdata
+    isFile?: boolean; // multipart file
+    headers?: object; // default header
+  }
 
-interface IApi {
-  url: string;
-  method: 'get' | 'post' | 'delete' | 'put';
-  isAuth?: boolean; // add session_id
-  isJson?: boolean; // json or formdata
-  isFile?: boolean; // multipart file
-  headers?: object; // default header
+  interface module {
+    [funcName: string]: api
+  }
+
+  interface modules {
+    [moduleName: string]: module;
+  }
+
 }

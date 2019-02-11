@@ -1,10 +1,8 @@
 
-export const api: IApiModule = {
+export default {
   Login: {
     url: 'account/public/miniappLogin',
     method: 'post',
     isAuth: false
   }
-};
-
-export default api;
+} as IApi.module;

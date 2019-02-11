@@ -2,7 +2,8 @@ declare namespace wxHttpClient {
   interface requestOptions {
     url: string
     method: string
-    data: object
+    data: any
     header: object
+    [key: string]: any
   }
 }

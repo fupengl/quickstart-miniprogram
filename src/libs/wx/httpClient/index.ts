@@ -35,8 +35,8 @@ export default class HttpClient {
     this.logModel = logModel;
   }
 
-  // parse url (add host and parse params)
-  getURI(uri: string, params: object = {}): string {
+  // parse url (add host and parse uri params)
+  getURI(uri: string = '', params: object = {}): string {
     uri = strFormat(uri, params);
     if (uri.match(/^http/)) {
       return uri;
@@ -48,47 +48,32 @@ export default class HttpClient {
   }
 
   // json request
-  async jsonRequest(opt, params: object = {}, header: object = {}) {
+  jsonRequest(opt, params: object = {}) {
     opt.header = Object.assign({}, opt.header, {
       'Content-Type': 'application/json; charset=utf-8'
-    }, header);
-    return await this.doRequest(opt, params);
+    });
+    return this._doRequest(opt, params);
   }
 
   // formdata request
-  async formRequest(opt, params: object = {}, header: object = {}) {
+  formRequest(opt, params: object = {}) {
     opt.header = Object.assign({}, opt.header, {
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
-    }, header);
-    return await this.doRequest(opt, params);
+    });
+    return this._doRequest(opt, params);
   }
 
-  async doRequest(opt, params: object = {}, header: object = {}) {
-    this.parseRequestOpt(opt, params);
-
-    if (this.logModel) {
-      const log = createApiLog(opt as apiLog);
-      try {
-        const resp = await this.request(opt);
-        log.logerRespSuccess('success');
-        return Promise.resolve(resp);
-      } catch (error) {
-        log.logerRespError(error);
-        return Promise.reject(error);
-      }
-    }
-
-    return this.request(opt);
-  }
-
-  async upLoadFile({ data: { filePath, ...data }, url, name }, params: object = {}, header: object = {}) {
-    let opt: any = {};
+  uploadFile({ data: { filePath, ...data }, name = 'file', ...options }, params: object = {}) {
+    const opt: any = options;
     opt.formData = data;
     opt.filePath = filePath;
-    opt.name = name || 'file';
-    opt.url = this.getURI(url, params);
-    opt.header = header;
+    opt.name = name;
+    opt.url = this.getURI(options.url, params);
 
+    return this._upload(opt);
+  }
+
+  private async _upload(opt) {
     try {
       opt = await Promise.resolve(this.interceptors.request.fulfilled(opt));
     } catch (error) {
@@ -110,14 +95,32 @@ export default class HttpClient {
     });
   }
 
+  private async _doRequest(opt, params: object = {}) {
+    this._parseRequestOpt(opt, params);
+
+    if (this.logModel) {
+      const log = createApiLog(opt as apiLog);
+      try {
+        const resp = await this._request(opt);
+        log.logerRespSuccess('success');
+        return Promise.resolve(resp);
+      } catch (error) {
+        log.logerRespError(error);
+        return Promise.reject(error);
+      }
+    }
+
+    return await this._request(opt);
+  }
+
   // format request params
-  private parseRequestOpt(opt, params: object = {}) {
+  private _parseRequestOpt(opt, params: object = {}) {
     opt.url = this.getURI(opt.url, params);
     opt.method = opt.method ? opt.method.toUpperCase() : 'GET';
   }
 
   // wx request
-  private async request(opt) {
+  private async _request(opt) {
     try {
       opt = await Promise.resolve(this.interceptors.request.fulfilled(opt));
     } catch (error) {
