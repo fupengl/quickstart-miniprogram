@@ -1,4 +1,4 @@
 module.exports = {
 	ENV: '"development"',
-	BASE_API: "'http://localhost:8081'"
+	BASE_API: "'https://your host'"	
 };

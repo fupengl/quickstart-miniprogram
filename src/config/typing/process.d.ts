@@ -4,7 +4,7 @@
 declare interface IEnvironmentMode {
   ENV: 'production' | 'development';
   BASE_API: string;
-  APP_ID: string;
+  APP_ID: number;
 }
 
 declare var process: {
