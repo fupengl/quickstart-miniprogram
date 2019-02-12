@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "es6",
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "strictNullChecks": true,
     "downlevelIteration": true,
-    "target": "es5",
     "noImplicitAny": false,
     "strict": true,
     "sourceMap": true,
