@@ -84,12 +84,5 @@
     "wx": true,
     "getCurrentPages": true,
     "getApp": true
-  },
-  "settings": {
-    "import/resolver": {
-      "webpack": {
-        "config": "build/webpack.config.babel.js"
-      }
-    }
   }
 }
