@@ -1,8 +1,8 @@
-import Conf from '@/config';
-import { createWxApi } from '@/libs/wx/api';
-import { createLogger } from '@/libs/wx/log';
-import { createStore } from '@/libs/wx/store';
-import store from '@/store';
+import Conf from '@/config/index';
+import { createWxApi } from '@/libs/wx/api/index';
+import { createLogger } from '@/libs/wx/log/index';
+import { createStore } from '@/libs/wx/store/index';
+import store from '@/store/index';
 
 App({
   requestLock: {

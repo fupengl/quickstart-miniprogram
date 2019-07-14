@@ -1,11 +1,19 @@
 import router from '@C/route';
+import t from '@L/utils/index';
+import { WatcherPage } from '@L/wx/watch/page';
 
-Page({
+WatcherPage({
   data: {
     motto: '点击 “编译” 以构建',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
+  },
+
+  watch: {
+    userInfo(val) {
+      console.log(val);
+    }
   },
 
   bindViewTap() {
@@ -26,11 +34,10 @@ Page({
     }
   },
 
-  getUserInfo(e: any) {
-    console.log(e);
+  getUserInfo: t.debounce(function ({ detail: { userInfo } }: WXEventBasic) {
     this.setData({
-      userInfo: e.detail.userInfo,
+      userInfo,
       hasUserInfo: true
     });
-  },
+  }, 300),
 });

@@ -26,7 +26,8 @@
       "@/*": ["./*"],
       "@S/*": ["./services/*"],
       "@T/*": ["./utils/*"],
-      "@C/*": ["./config/*"]
+      "@C/*": ["./config/*"],
+      "@L/*": ["./libs/*"]
     }
   },
   "awesomeTypescriptLoaderOptions": {},

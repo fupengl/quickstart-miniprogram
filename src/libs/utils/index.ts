@@ -1,5 +1,6 @@
 import _array from './_array';
 import _date from './_date';
+import _event from './_event';
 import _string from './_string';
 import uri from './uri';
 
@@ -7,6 +8,7 @@ export default {
   ..._array,
   ..._date,
   ..._string,
+  ..._event,
   ...uri,
 
   deepClone(obj: any): any {
@@ -39,29 +41,6 @@ export default {
     } catch (e) {
       return undefined;
     }
-  },
-
-  /**
-   * Returns a function, that, as long as it continues to be invoked, will not be triggered.
-   * The function will be called after it stops being called for N milliseconds.
-   *
-   * @param {Function} func need debounce's function
-   * @param {Number} wait milliseconds
-   */
-  debounce(func: (e: any) => any, wait: number) {
-    let timer: any;
-
-    // need function
-    return function (args: any) {
-      if (timer) {
-        clearTimeout(timer);
-      }
-
-      timer = setTimeout(() => {
-        timer = null;
-        func.call(this, args);
-      }, wait);
-    };
   },
 
 };
